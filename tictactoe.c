@@ -10,9 +10,13 @@
 const int BOARD_SIZE = 3;
 const int WINNING_COND = 3;
 
-void printLine() { printf("==================="); }
+void printLine() { printf("===========================\n"); }
 void initBoard(char (*board)[BOARD_SIZE]); // initialize or reset the board
 void printBoard(char (*board)[BOARD_SIZE]);
+
+int displayMenu(); // let player choose:
+                   // - player vs. player
+                   // - player vs. computer
 
 int main()
 {
@@ -27,7 +31,7 @@ int main()
   char board[BOARD_SIZE][BOARD_SIZE];
 
   initBoard(board);
-  printBoard(board);
+  printf("%d", displayMenu());
 
 
   return 0;
@@ -56,4 +60,19 @@ void printBoard(char (*board)[BOARD_SIZE])
     printf("|\n");
     printf("+-----------+\n");
   }
+}
+
+int displayMenu()
+{
+  int option;
+
+  printLine();
+  printf("WELCOME TO TIC TAC TOE!\n");
+  printf("1 --- player vs. player\n");
+  printf("2 --- player vs. computer\n");
+  printf("Enter your choice (1 or 2): ");
+  scanf("%d", &option);
+  printLine();
+
+  return option;
 }
