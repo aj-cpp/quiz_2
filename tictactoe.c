@@ -7,50 +7,53 @@
 #include <stdlib.h>
 #include <time.h>
 
-void displayBoard();
-void printLine();
-void initGame();
+const int BOARD_SIZE = 3;
+const int WINNING_COND = 3;
+
+void printLine() { printf("==================="); }
+void initBoard(char (*board)[BOARD_SIZE]); // initialize or reset the board
+void printBoard(char (*board)[BOARD_SIZE]);
 
 int main()
 {
-  // TODO: Create multidimensional array to hold the player values
-  char board[3][3];
-  // Initialize board array with ' ' (space)
-  for (int i = 0; i < 3; i++)
-  {
-    for (int j = 0; j < 3; j++)
-    {
-      board[i][j] = ' ';
-    }
-  }
-
   // TODO: Create a function for initGame
   // initGame:
   // - Display option to choose between vs. player or vs. computer
-
-  // TODO: Create a function to display the board
 
   // TODO: Create game logic for TicTacToe
 
   // TODO: Create logic for computer
 
+  char board[BOARD_SIZE][BOARD_SIZE];
+
+  initBoard(board);
+  printBoard(board);
+
 
   return 0;
 }
 
-void displayBoard(char board[3][])
+void initBoard(char (*board)[BOARD_SIZE])
 {
-  printf("+-----------+");
-  printf("| %d | %d | %d |", board[0][0], board[0][1], board[0][2]);
-
+  for (int i = 0; i < BOARD_SIZE; i++)
+  {
+    for (int j = 0; j < BOARD_SIZE; j++)
+    {
+      board[i][j] = ' ';
+    }
+  }
 }
 
-void printLine()
+void printBoard(char (*board)[BOARD_SIZE])
 {
-  printf("===========================");
-}
-
-void initGame()
-{
-  
+  printf("+-----------+\n");
+  for (int row = 0; row < BOARD_SIZE; row++)
+  {
+    for (int column = 0; column < BOARD_SIZE; column++)
+    {
+      printf("| %c ", board[row][column]);
+    }
+    printf("|\n");
+    printf("+-----------+\n");
+  }
 }
