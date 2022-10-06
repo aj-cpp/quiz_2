@@ -7,9 +7,23 @@
 #include <stdlib.h>
 #include <time.h>
 
+const int BOARD_SIZE = 3;
+const int WINNING_STREAK = 3;
+
 int main()
 {
   // TODO: Create multidimensional array to hold the player values
+  char board[BOARD_SIZE][BOARD_SIZE];
+  // Initialize board array with ' ' (space)
+  for (int i = 0; i < BOARD_SIZE; i++)
+  {
+    for (int j = 0; j < BOARD_SIZE; j++)
+    {
+      board[i][j] = ' ';
+    }
+  }
+
+  
 
   // TODO: Create a function for initGame
   // initGame:
