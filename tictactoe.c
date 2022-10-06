@@ -17,22 +17,19 @@ void printBoard(char (*board)[BOARD_SIZE]);
 int displayMenu(); // let player choose:
                    // - player vs. player
                    // - player vs. computer
+void initGame(char (*board)[BOARD_SIZE]);
+void initVsPlayer(char (*board)[BOARD_SIZE]);
+void initVsComputer(char (*board)[BOARD_SIZE]);
 
 int main()
 {
-  // TODO: Create a function for initGame
-  // initGame:
-  // - Display option to choose between vs. player or vs. computer
-
   // TODO: Create game logic for TicTacToe
 
   // TODO: Create logic for computer
 
   char board[BOARD_SIZE][BOARD_SIZE];
 
-  initBoard(board);
-  printf("%d", displayMenu());
-
+  initGame(board);
 
   return 0;
 }
@@ -50,6 +47,7 @@ void initBoard(char (*board)[BOARD_SIZE])
 
 void printBoard(char (*board)[BOARD_SIZE])
 {
+  printf("The current status is:\n");
   printf("+-----------+\n");
   for (int row = 0; row < BOARD_SIZE; row++)
   {
@@ -64,15 +62,48 @@ void printBoard(char (*board)[BOARD_SIZE])
 
 int displayMenu()
 {
-  int option;
+  int option = -1;
+
+  do
+  {
+    printLine();
+    printf("WELCOME TO TIC TAC TOE!\n");
+    printf("1 --- player vs. player\n");
+    printf("2 --- player vs. computer\n");
+    printf("Enter your choice (1 or 2): ");
+    scanf("%d", &option);
+    // printf("Option: %d\n", option);
+
+    if (option < 0 || option > 2)
+      printf("Invalid input.\n");
+      
+  } while (option < 0 || option > 2);
 
   printLine();
-  printf("WELCOME TO TIC TAC TOE!\n");
-  printf("1 --- player vs. player\n");
-  printf("2 --- player vs. computer\n");
-  printf("Enter your choice (1 or 2): ");
-  scanf("%d", &option);
-  printLine();
-
   return option;
+}
+
+void initGame(char (*board)[BOARD_SIZE])
+{
+  initBoard(board);
+
+  if (displayMenu() != 1)
+  {
+    initVsComputer(board);
+    return;
+  }
+
+  initVsPlayer(board);
+}
+
+// TODO: initVsPlayer
+void initVsPlayer(char (*board)[BOARD_SIZE])
+{
+
+}
+
+// TODO: initVsComputer
+void initVsComputer(char (*board)[BOARD_SIZE])
+{
+
 }
