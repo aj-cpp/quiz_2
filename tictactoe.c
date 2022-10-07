@@ -2,24 +2,7 @@
   TicTacToe
   A game between 2 players or player vs. computer
 */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-const int BOARD_SIZE = 3;
-const int WINNING_COND = 3;
-
-void printLine() { printf("===========================\n"); }
-void initBoard(char (*board)[BOARD_SIZE]); // initialize or reset the board
-void printBoard(char (*board)[BOARD_SIZE]);
-
-int displayMenu(); // let player choose:
-                   // - player vs. player
-                   // - player vs. computer
-void initGame(char (*board)[BOARD_SIZE]);
-void initVsPlayer(char (*board)[BOARD_SIZE]);
-void initVsComputer(char (*board)[BOARD_SIZE]);
+#include "tictactoe.h"
 
 int main()
 {
@@ -99,11 +82,35 @@ void initGame(char (*board)[BOARD_SIZE])
 // TODO: initVsPlayer
 void initVsPlayer(char (*board)[BOARD_SIZE])
 {
-
+  
 }
 
 // TODO: initVsComputer
 void initVsComputer(char (*board)[BOARD_SIZE])
 {
 
+}
+
+// TODO: movePlayer
+void movePlayer(char (*board)[BOARD_SIZE])
+{
+
+}
+
+// TODO: moveComputer
+void moveComputer(char (*board)[BOARD_SIZE])
+{
+
+}
+
+// TODO: checkUnoccupied
+int checkUnoccupied(char (*board)[BOARD_SIZE])
+{
+  return 0;
+}
+
+// TODO: checkWinner
+int checkWinner(char (*board)[BOARD_SIZE], char *winner)
+{
+  return 0;
 }
