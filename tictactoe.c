@@ -6,10 +6,6 @@
 
 int main()
 {
-  // TODO: Create game logic for TicTacToe
-
-  // TODO: Create logic for computer
-
   char board[BOARD_SIZE][BOARD_SIZE];
 
   initGame(board);
@@ -17,6 +13,9 @@ int main()
   return 0;
 }
 
+// = = = = = = = = = = = = = = = = = =
+// FUNCTIONS IMPLEMENTATION
+// = = = = = = = = = = = = = = = = = =
 void initBoard(char (*board)[BOARD_SIZE])
 {
   for (int i = 0; i < BOARD_SIZE; i++)
@@ -55,7 +54,7 @@ int displayMenu()
     printf("2 --- player vs. computer\n");
     printf("Enter your choice (1 or 2): ");
     scanf("%d", &option);
-    // printf("Option: %d\n", option);
+    // printf("Option: %d\n", option); // debug
 
     if (option < 0 || option > 2)
       printf("Invalid input.\n");
@@ -63,6 +62,8 @@ int displayMenu()
   } while (option < 0 || option > 2);
 
   printLine();
+  printf("You have entered choice %d\n", option);
+
   return option;
 }
 
@@ -70,31 +71,54 @@ void initGame(char (*board)[BOARD_SIZE])
 {
   initBoard(board);
 
-  if (displayMenu() != 1)
+  switch(displayMenu())
   {
-    initVsComputer(board);
-    return;
-  }
+    case 1:
+      initVsPlayer(board);
+      break;
 
-  initVsPlayer(board);
+    case 2:
+      initVsComputer(board);
+      break;
+
+    default:
+      initVsComputer(board);
+      break;
+  }
 }
 
 // TODO: initVsPlayer
-void initVsPlayer(char (*board)[BOARD_SIZE])
+char initVsPlayer(char (*board)[BOARD_SIZE])
 {
-  
+  printf("initVsPlayer called\n");
+  char winner = ' ';
+
+  while (winner == ' ' && checkUnoccupied(board) != 0)
+  {
+    printBoard(board);
+
+  }
+
+  return winner;
 }
 
 // TODO: initVsComputer
-void initVsComputer(char (*board)[BOARD_SIZE])
+char initVsComputer(char (*board)[BOARD_SIZE])
 {
+  char winner = ' ';
 
+  printBoard(board);
+
+  return winner;
 }
 
 // TODO: movePlayer
 void movePlayer(char (*board)[BOARD_SIZE])
 {
+  int row;
+  int column;
 
+  
 }
 
 // TODO: moveComputer
@@ -106,7 +130,22 @@ void moveComputer(char (*board)[BOARD_SIZE])
 // TODO: checkUnoccupied
 int checkUnoccupied(char (*board)[BOARD_SIZE])
 {
-  return 0;
+  int unoccupied = pow(BOARD_SIZE, 2);
+
+  for(int row = 0; row < BOARD_SIZE; row++)
+    for(int column = 0; column < BOARD_SIZE; column++)
+      if(board[row][column] != ' ')
+        unoccupied--;
+
+  if (unoccupied < 0)
+  {
+    printf("Exception: Lowest unoccupied is 0\n");
+    exit(1);
+  }
+
+  printf("Unoccupied: %d\n", unoccupied);
+
+  return unoccupied;
 }
 
 // TODO: checkWinner
@@ -114,3 +153,4 @@ int checkWinner(char (*board)[BOARD_SIZE], char *winner)
 {
   return 0;
 }
+
