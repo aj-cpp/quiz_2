@@ -58,7 +58,7 @@ int displayMenu()
 
     if (option < 0 || option > 2)
       printf("Invalid input.\n");
-      
+
   } while (option < 0 || option > 2);
 
   printLine();
@@ -71,19 +71,19 @@ void initGame(char (*board)[BOARD_SIZE])
 {
   initBoard(board);
 
-  switch(displayMenu())
+  switch (displayMenu())
   {
-    case 1:
-      initVsPlayer(board);
-      break;
+  case 1:
+    initVsPlayer(board);
+    break;
 
-    case 2:
-      initVsComputer(board);
-      break;
+  case 2:
+    initVsComputer(board);
+    break;
 
-    default:
-      initVsComputer(board);
-      break;
+  default:
+    initVsComputer(board);
+    break;
   }
 }
 
@@ -96,7 +96,6 @@ char initVsPlayer(char (*board)[BOARD_SIZE])
   while (winner == ' ' && checkUnoccupied(board) != 0)
   {
     printBoard(board);
-
   }
 
   return winner;
@@ -113,18 +112,39 @@ char initVsComputer(char (*board)[BOARD_SIZE])
 }
 
 // TODO: movePlayer
-void movePlayer(char (*board)[BOARD_SIZE])
+void movePlayer(char (*board)[BOARD_SIZE], const char player)
 {
   int row;
   int column;
 
-  
+  do
+  {
+    if (player == PLAYER1)
+      printf("Player 1: make your move\n");
+    else if (player == PLAYER2)
+      printf("Player 2: make your move\n");
+
+    scanf("%d", &row);
+    scanf(" %d", &column);
+
+    row--;
+    column--;
+
+    if (board[row][column] != ' ')
+    {
+      printf("Invalid move! Position is occupied.\n");
+      continue;
+    }
+
+    board[row][column] = player;
+  } while (board[row][column] != ' ');
+
+  // printf("Input: %d %d", row, column); // debug
 }
 
 // TODO: moveComputer
 void moveComputer(char (*board)[BOARD_SIZE])
 {
-
 }
 
 // TODO: checkUnoccupied
@@ -132,9 +152,9 @@ int checkUnoccupied(char (*board)[BOARD_SIZE])
 {
   int unoccupied = pow(BOARD_SIZE, 2);
 
-  for(int row = 0; row < BOARD_SIZE; row++)
-    for(int column = 0; column < BOARD_SIZE; column++)
-      if(board[row][column] != ' ')
+  for (int row = 0; row < BOARD_SIZE; row++)
+    for (int column = 0; column < BOARD_SIZE; column++)
+      if (board[row][column] != ' ')
         unoccupied--;
 
   if (unoccupied < 0)
@@ -153,4 +173,3 @@ int checkWinner(char (*board)[BOARD_SIZE], char *winner)
 {
   return 0;
 }
-
