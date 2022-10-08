@@ -1,15 +1,27 @@
 /*
   TicTacToe
   A game between 2 players or player vs. computer
+  
+  Andrew Jujun
 */
 #include "tictactoe.h"
 
 int main()
 {
   char board[BOARD_SIZE][BOARD_SIZE];
+  char play_again;
+  do
+  {
+    initGame(board);
 
-  initGame(board);
+    printLine();
+    printf("Game over!\n");
+    printf("Do you want to play again? (y/n)\n");
+    while ((getchar()) != '\n'); // flush stdin
+    play_again = getchar();
 
+    // printf("play_again: %c\n", play_again); // debug
+  } while (play_again == 'y');
   return 0;
 }
 
@@ -85,8 +97,6 @@ void initGame(char (*board)[BOARD_SIZE])
     initVsComputer(board);
     break;
   }
-
-  endGame();
 }
 
 void initVsPlayer(char (*board)[BOARD_SIZE])
@@ -191,7 +201,7 @@ void moveComputer(char (*board)[BOARD_SIZE])
   } while (board[row][column] != ' ');
 
   board[row][column] = COMPUTER;
-  printf("Computer chooses %d and %d as the move!\n", row+1, column+1);
+  printf("Computer chooses %d and %d as the move!\n", row + 1, column + 1);
 }
 
 int checkUnoccupied(char (*board)[BOARD_SIZE])
@@ -217,23 +227,21 @@ int checkUnoccupied(char (*board)[BOARD_SIZE])
 char checkWinner(char (*board)[BOARD_SIZE])
 {
   // NOTE: only works for BOARD_SIZE = 3
-  
-  for(int row = 0; row < BOARD_SIZE; row++)
-    if(board[row][0] == board[row][1] 
-       && board[row][1] == board[row][2])
+
+  for (int row = 0; row < BOARD_SIZE; row++)
+    if (board[row][0] == board[row][1] && board[row][1] == board[row][2])
       return board[row][0];
 
-  for(int column = 0; column < BOARD_SIZE; column++)
-    if(board[0][column] == board[1][column]
-       && board[1][column] == board[2][column])
+  for (int column = 0; column < BOARD_SIZE; column++)
+    if (board[0][column] == board[1][column] && board[1][column] == board[2][column])
       return board[0][column];
 
   // diagonal
-  if(board[0][0] == board[1][1] && board[1][1] == board[2][2])
+  if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
     return board[0][0];
 
   // anti-diagonal
-  if(board[0][2] == board[1][1] && board[1][1] == board[2][0])
+  if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
     return board[0][2];
 
   return ' ';
@@ -279,9 +287,4 @@ void printWinnerComputer(char winner)
     printf("Computer wins!\n");
     return;
   }
-}
-
-void endGame()
-{
-  printf("End of game.\n");
 }

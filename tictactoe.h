@@ -32,6 +32,5 @@ char checkWinner(char (*board)[BOARD_SIZE]); // returns 1 or true
 
 void printWinnerPlayer(char winner);
 void printWinnerComputer(char winner);
-void endGame();
 
 #endif // TICTACTOE_AJ_H
