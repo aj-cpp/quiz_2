@@ -85,10 +85,11 @@ void initGame(char (*board)[BOARD_SIZE])
     initVsComputer(board);
     break;
   }
+
+  endGame();
 }
 
-// TODO: initVsPlayer
-char initVsPlayer(char (*board)[BOARD_SIZE])
+void initVsPlayer(char (*board)[BOARD_SIZE])
 {
   char winner = ' ';
   char current_player = PLAYER1;
@@ -110,17 +111,34 @@ char initVsPlayer(char (*board)[BOARD_SIZE])
     current_player = PLAYER1;
   }
 
-  return winner;
+  printBoard(board);
+  printWinnerPlayer(winner);
 }
 
-// TODO: initVsComputer
-char initVsComputer(char (*board)[BOARD_SIZE])
+void initVsComputer(char (*board)[BOARD_SIZE])
 {
   char winner = ' ';
+  char current_player = PLAYER1;
+
+  while (winner == ' ' && checkUnoccupied(board) != 0)
+  {
+    printBoard(board);
+
+    if (current_player == PLAYER1)
+    {
+      movePlayer(board, current_player);
+      winner = checkWinner(board);
+      current_player = COMPUTER;
+      continue;
+    }
+
+    moveComputer(board);
+    winner = checkWinner(board);
+    current_player = PLAYER1;
+  }
 
   printBoard(board);
-
-  return winner;
+  printWinnerComputer(winner);
 }
 
 void movePlayer(char (*board)[BOARD_SIZE], const char player)
@@ -138,24 +156,42 @@ void movePlayer(char (*board)[BOARD_SIZE], const char player)
     scanf("%d", &row);
     scanf(" %d", &column);
 
+    // printf("Input: %d %d\n", row, column); // debug
+
     row--;
     column--;
+
+    // printf("Row: %d | Column: %d\n", row, column); // debug
 
     if (board[row][column] != ' ')
     {
       printf("Invalid move! Position is occupied.\n");
+      printBoard(board);
       continue;
     }
 
     board[row][column] = player;
+    break;
   } while (board[row][column] != ' ');
-
-  // printf("Input: %d %d", row, column); // debug
 }
 
-// TODO: moveComputer
 void moveComputer(char (*board)[BOARD_SIZE])
 {
+  srand(time(0));
+  int row;
+  int column;
+
+  if (checkUnoccupied(board) < 1)
+    return;
+
+  do
+  {
+    row = rand() % 3;
+    column = rand() % 3;
+  } while (board[row][column] != ' ');
+
+  board[row][column] = COMPUTER;
+  printf("Computer chooses %d and %d as the move!\n", row+1, column+1);
 }
 
 int checkUnoccupied(char (*board)[BOARD_SIZE])
@@ -173,7 +209,7 @@ int checkUnoccupied(char (*board)[BOARD_SIZE])
     exit(1);
   }
 
-  printf("Unoccupied: %d\n", unoccupied);
+  // printf("Unoccupied: %d\n", unoccupied); // debug
 
   return unoccupied;
 }
@@ -201,4 +237,51 @@ char checkWinner(char (*board)[BOARD_SIZE])
     return board[0][2];
 
   return ' ';
+}
+
+void printWinnerPlayer(char winner)
+{
+  if (winner == ' ')
+  {
+    printf("It's a tie!\n");
+    return;
+  }
+
+  if (winner == PLAYER1)
+  {
+    printf("Player 1 wins!\n");
+    return;
+  }
+
+  if (winner == PLAYER2)
+  {
+    printf("Player 2 wins!\n");
+    return;
+  }
+}
+
+void printWinnerComputer(char winner)
+{
+  if (winner == ' ')
+  {
+    printf("It's a tie!\n");
+    return;
+  }
+
+  if (winner == PLAYER1)
+  {
+    printf("Player 1 wins!\n");
+    return;
+  }
+
+  if (winner == COMPUTER)
+  {
+    printf("Computer wins!\n");
+    return;
+  }
+}
+
+void endGame()
+{
+  printf("End of game.\n");
 }

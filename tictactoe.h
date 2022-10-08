@@ -21,13 +21,17 @@ int displayMenu(); // let player choose:
                    // - player vs. player
                    // - player vs. computer
 void initGame(char (*board)[BOARD_SIZE]);
-char initVsPlayer(char (*board)[BOARD_SIZE]);
-char initVsComputer(char (*board)[BOARD_SIZE]);
+void initVsPlayer(char (*board)[BOARD_SIZE]);
+void initVsComputer(char (*board)[BOARD_SIZE]);
 
 void movePlayer(char (*board)[BOARD_SIZE], const char player); // initiate player move
 void moveComputer(char (*board)[BOARD_SIZE]); // initiate computer move
 int checkUnoccupied(char (*board)[BOARD_SIZE]); // check unoccupied spot
 char checkWinner(char (*board)[BOARD_SIZE]); // returns 1 or true 
-                                                          // if there's a winner
+                                             // if there's a winner
+
+void printWinnerPlayer(char winner);
+void printWinnerComputer(char winner);
+void endGame();
 
 #endif // TICTACTOE_AJ_H
