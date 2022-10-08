@@ -90,12 +90,24 @@ void initGame(char (*board)[BOARD_SIZE])
 // TODO: initVsPlayer
 char initVsPlayer(char (*board)[BOARD_SIZE])
 {
-  printf("initVsPlayer called\n");
   char winner = ' ';
+  char current_player = PLAYER1;
 
   while (winner == ' ' && checkUnoccupied(board) != 0)
   {
     printBoard(board);
+
+    if (current_player == PLAYER1)
+    {
+      movePlayer(board, current_player);
+      winner = checkWinner(board);
+      current_player = PLAYER2;
+      continue;
+    }
+
+    movePlayer(board, current_player);
+    winner = checkWinner(board);
+    current_player = PLAYER1;
   }
 
   return winner;
@@ -111,7 +123,6 @@ char initVsComputer(char (*board)[BOARD_SIZE])
   return winner;
 }
 
-// TODO: movePlayer
 void movePlayer(char (*board)[BOARD_SIZE], const char player)
 {
   int row;
@@ -147,7 +158,6 @@ void moveComputer(char (*board)[BOARD_SIZE])
 {
 }
 
-// TODO: checkUnoccupied
 int checkUnoccupied(char (*board)[BOARD_SIZE])
 {
   int unoccupied = pow(BOARD_SIZE, 2);
@@ -168,8 +178,27 @@ int checkUnoccupied(char (*board)[BOARD_SIZE])
   return unoccupied;
 }
 
-// TODO: checkWinner
-int checkWinner(char (*board)[BOARD_SIZE], char *winner)
+char checkWinner(char (*board)[BOARD_SIZE])
 {
-  return 0;
+  // NOTE: only works for BOARD_SIZE = 3
+  
+  for(int row = 0; row < BOARD_SIZE; row++)
+    if(board[row][0] == board[row][1] 
+       && board[row][1] == board[row][2])
+      return board[row][0];
+
+  for(int column = 0; column < BOARD_SIZE; column++)
+    if(board[0][column] == board[1][column]
+       && board[1][column] == board[2][column])
+      return board[0][column];
+
+  // diagonal
+  if(board[0][0] == board[1][1] && board[1][1] == board[2][2])
+    return board[0][0];
+
+  // anti-diagonal
+  if(board[0][2] == board[1][1] && board[1][1] == board[2][0])
+    return board[0][2];
+
+  return ' ';
 }
